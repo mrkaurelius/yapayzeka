@@ -2,13 +2,16 @@ import sys
 import numpy as np
 import math
 import random
+import time
 
 import gym
 import gym_maze
 
 
+# öğrenme ile ilgili parametrelerinrent
 def simulate():
 
+    # öğrenme ile ilgili parametrelerin
     # Instantiating the learning related parameters
     learning_rate = get_learning_rate(0)
     explore_rate = get_explore_rate(0)
@@ -16,10 +19,11 @@ def simulate():
 
     num_streaks = 0
 
-    # Render tha maze
+    # labirent
     env.render()
 
     for episode in range(NUM_EPISODES):
+        
 
         # Reset the environment
         obv = env.reset()
@@ -35,9 +39,12 @@ def simulate():
 
             # execute the action
             obv, reward, done, _ = env.step(action)
+            
+            # time.sleep(0.1)
 
             # Observe the result
             state = state_to_bucket(obv)
+            print(obv)
             total_reward += reward
 
             # Update the Q based on the result
@@ -59,6 +66,11 @@ def simulate():
                 print("Learning rate: %f" % learning_rate)
                 print("Streaks: %d" % num_streaks)
                 print("")
+
+            # if t % 100 == 0:
+            #     print(q_table)
+                # sys.exit(0)
+
 
             elif DEBUG_MODE == 1:
                 if done or t >= MAX_T - 1:
@@ -164,27 +176,15 @@ if __name__ == "__main__":
     Defining the simulation related constants
     '''
     NUM_EPISODES = 50000
-    MAX_T = np.prod(MAZE_SIZE, dtype=int) * 100
-    STREAK_TO_END = 100
+    MAX_T = np.prod(MAZE_SIZE, dtype=int) * 100 # episode time i bir episode bundan uzun suremez
+    STREAK_TO_END = 100 # simulasyonun bitmesi icin gerekli mukerrer hit sayisi
     SOLVED_T = np.prod(MAZE_SIZE, dtype=int)
-    DEBUG_MODE = 0
+    DEBUG_MODE = 2
     RENDER_MAZE = True
-    ENABLE_RECORDING = False
 
     '''
     Creating a Q-Table for each state-action pair
     '''
     q_table = np.zeros(NUM_BUCKETS + (NUM_ACTIONS,), dtype=float)
 
-    '''
-    Begin simulation
-    '''
-    recording_folder = "/tmp/maze_q_learning"
-
-    if ENABLE_RECORDING:
-        env.monitor.start(recording_folder, force=True)
-
     simulate()
-
-    if ENABLE_RECORDING:
-        env.monitor.close()

@@ -1,5 +1,6 @@
 import gym
 import gym_maze # kullanilmasada durmasi lazim envlerin register edilmesi icin
+
 from time import sleep
 from numpy import inf 
 

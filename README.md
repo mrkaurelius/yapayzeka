@@ -20,10 +20,10 @@ $ pip3 install -r requirements.txt
 
 #### gym-maze
 PyPI de olmayan gym-maze kutuphanesinin yuklenmesi.
-```
-cd yapayzeka
-cd lib/gym-maze
-python3 setup.py install
+```bash
+$ cd yapayzeka
+$ cd lib/gym-maze
+$ python3 setup.py install
 ```
 
 Debian 10 Busterda test edildi. Debian tabanli dagitimlarda sorunsuz calismasi gerekir.
